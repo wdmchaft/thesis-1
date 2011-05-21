@@ -9,7 +9,7 @@ classdef Solid
     end
     
     methods
-        function obj = Solid(radius, thickness)
+        function obj = Solid(thickness, radius)
             obj.thickness = thickness;
             obj.radius = radius;
         end
@@ -18,21 +18,24 @@ classdef Solid
             fplot(@(x)obj.frequencyEquation(x), [lo, hi, -hi hi])
         end
         
-        function root = roots(obj, limx, step)
+        function root = roots(obj, nroots, limx, step)
         % finds roots of frequency equation on interval given by xlim
         % approimation points are taken from limx on step defined by step
-            root = zeros(size(1, limx(2)/step));
+            tmp = zeros(1, ceil((limx(2) - limx(1))/step));
             n = 0;
-            for xval = limx(1) + step:step:limx(2)/step
+            for xval = (limx(1)+step):step:limx(2)
                 n = n + 1;
-                r = fzero(@(x)obj.frequencyEquation(x),xval);
+                r = fzeroq(@(x)obj.frequencyEquation(x),xval);
                 if ( ~isnan(r) )
-                    root(n) = round(r*1e4)/1e4;
+                    tmp(n) = roundn(r,-8); % round to 1e-8
+                end
+                
+                root = unique(tmp(find(tmp > 0)));
+                if (length(root) == nroots )
+                    break
                 end
             end;
-            root = root(find(root > 0));
-            root = unique(root);
-        end        
+        end    
     end
     
     methods (Access='protected', Hidden=true)
