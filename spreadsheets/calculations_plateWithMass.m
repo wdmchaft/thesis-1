@@ -1,4 +1,4 @@
-syms lambda rho C1 C2 C3 C4 flexRig nu R r;
+syms lambda rho C1 C2 C3 C4 flexRig nu mu R r;
 coefficients = [C1 C2 C3 C4];
 
 
@@ -22,7 +22,7 @@ Q = simple(collect(Q,coefficients));
 row1 = subs(W, rho, R);
 row2 = subs(dW, rho, R);
 row3 = subs(dW, rho, r);
-row4 = subs(Q, rho, r);
+row4 = subs(2*pi*rho*Q - flexRig * pi * rho^2 * mu * lambda^4 * W, rho, r);
 
 rows = [row1  row2  row3  row4];
 
@@ -41,4 +41,6 @@ end
 
 % determinant
 DELTA = det(A);
-DELTA = simple(collect(DELTA,coefficients));
+DELTA = collect(DELTA,[lambda r R]);
+DELTA = collect(DELTA/flexRig/pi, [flexRig pi]);
+DELTA = collect(DELTA/lambda^4, [lambda]);

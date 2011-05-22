@@ -3,9 +3,11 @@ classdef Solid
     properties
         thickness
         radius
+        material
     end
     
-    properties(SetAccess='private', GetAccess='private')
+    properties(SetAccess='private')
+        D
     end
     
     methods
@@ -35,7 +37,12 @@ classdef Solid
                     break
                 end
             end;
-        end    
+        end
+        
+        function D = get.D(obj)
+            D = 2 * obj.material.youngModulus * obj.thickness^3 / (3 - 3 * obj.material.puassonRatio^2);
+        end
+        
     end
     
     methods (Access='protected', Hidden=true)
