@@ -18,7 +18,7 @@ disp('solid: ')
 disp(solid)
 
 
-% holeRelSize = [0.5 0.2 0.1 0.01];
+holeRelSize = [0.5 0.2 0.1 0.01];
 % for n = 1:length(holeRelSize)
 %     g_hole.holeRadius = g_hole.radius .* holeRelSize(n);
 %     hole = g_hole.roots(5, [0 50], 1);
@@ -27,11 +27,13 @@ disp(solid)
 %     disp(hole)
 % end
 
-relMass = [0.1 1 5];
-for n = 1:length(relMass)
-    g_mass.mu = relMass(n);
-    mass = g_mass.roots(5, [0 50], 1);
-    disp('mass:')
-    disp(relMass(n))
-    disp(mass)
+relMass = [5 1 0.1];
+for p = 1:length(holeRelSize)
+    for n = 1:length(relMass)
+        g_mass.mu = relMass(n);
+        g_mass.holeRadius = g_mass.radius * holeRelSize(p);
+        mass = g_mass.roots(5, [0 50], 1);
+        disp(strcat('mass: xi=', num2str(holeRelSize(p)), ' mu=', num2str(relMass(n))));
+        disp(mass)
+    end
 end

@@ -1,7 +1,4 @@
 classdef Plate
-    %MATERIALCONSTANTS Summary of this class goes here
-    %   Detailed explanation goes here
-    
     properties (GetAccess='public')
         material
         geometry
@@ -21,11 +18,11 @@ classdef Plate
             D = 2 * obj.material.youngModulus * obj.geometry.thickness^3 / (3 - 3 * obj.material.puassonRatio^2);
         end
         
-        function f = eigenFrequencies(obj)
-            lambdaR = obj.geometry.roots([0 20], 1);
+        function f = eigenFrequencies(obj, nroots)
+            lambdaR = obj.geometry.roots(nroots, [0 50], 1);
             lambda = lambdaR ./ obj.geometry.radius;
             omega = sqrt(lambda.^4 .* obj.flexualRigidity() ./ (2 .* obj.geometry.thickness .* obj.material.density));
-            f = omega ./ (2 .* pi);
+            f = roundn(omega ./ (2 .* pi),-2);
         end
     end
     
