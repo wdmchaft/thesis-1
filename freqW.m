@@ -4,7 +4,7 @@ function f = freqW( f, plate, Q )
 
 
 lambda = plate.f2lambda(f);
-lambda = lambda./(1 - 1i / Q)^(1/4);
+lambda = lambda./(1 + 1i / Q)^(1/4);
 
 R = plate.geometry.radius;
 r = R * plate.geometry.xi;

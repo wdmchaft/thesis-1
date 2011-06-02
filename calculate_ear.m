@@ -7,8 +7,9 @@ m = material.DefaultMaterial(youngModulus, puassonRatio, density);
 radius = 3e-3;
 %thickness = 15e-6;
 boneRadius = 0.8*radius;
+boneMass = 58e-6;
 
-g_mass = geometry.SolidWithMass(thickness, radius, boneRadius, 5);
+g_mass = geometry.SolidWithMass(thickness, radius, boneRadius, boneMass);
 g_mass.material = m;
 
 p = Plate(m, g_mass);
@@ -28,4 +29,5 @@ freqz
 
 
 filename=strcat('freq ',' E=',num2str(youngModulus,'%0.2g'),' nu=',num2str(puassonRatio),' rho=',num2str(density),' R=',num2str(radius),' R_man=',num2str(boneRadius),' h=',num2str(thickness),' mu=',num2str(g_mass.mu),'.eps');
+set(gca, 'Position', [0.1 0.2 0.9 0.6])
 exportfig(gcf,filename, 'width',6, 'fontmode','fixed', 'fontsize',12, 'Resolution', 96);

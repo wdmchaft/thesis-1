@@ -1,17 +1,18 @@
 classdef SolidWithMass < geometry.SolidWithHole
 
     properties
-        mu
+        M0
     end
     
     properties (SetAccess = 'private')
         xi
+        mu
     end
     
     methods
-        function obj = SolidWithMass(thickness, radius, holeRadius, mu)
+        function obj = SolidWithMass(thickness, radius, holeRadius, M0)
             obj = obj@geometry.SolidWithHole(thickness, radius, holeRadius);
-            obj.mu = mu;
+            obj.M0 = M0;
         end
     end
     
@@ -24,6 +25,10 @@ classdef SolidWithMass < geometry.SolidWithHole
     methods
         function xi = get.xi(obj)
             xi = obj.holeRadius / obj.radius;
+        end
+        
+        function mu = get.mu(obj)
+            mu = obj.M0 / (2*obj.thickness * obj.material.density * pi * obj.holeRadius^2);
         end
     end
     
