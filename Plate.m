@@ -24,6 +24,11 @@ classdef Plate
             omega = sqrt(lambda.^4 .* obj.flexualRigidity() ./ (2 .* obj.geometry.thickness .* obj.material.density));
             f = roundn(omega ./ (2 .* pi),-2);
         end
+        
+        function lambda = f2lambda(obj, f)
+            omega = 2 .* pi .* f;
+            lambda = (2 .* obj.geometry.thickness .* obj.material.density .* omega.^2 ./ obj.flexualRigidity()).^(1/4);
+        end        
     end
     
 end
