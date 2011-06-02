@@ -8,7 +8,7 @@ coefficients = [C1 C2 C3 C4];
 W = C1 * besselj(0,lambda*rho) + C2 * bessely(0, lambda*rho) + C3 * besseli(0,lambda*rho)+ C4 * besselk(0,lambda*rho);
 
 % absolute term of deflection
-W_absoluteTerm =  0.5*s/(lambda^4 * D) * (pi*lambda*r * ( bessely(1,lambda*r)*0.5 - besselj(1,lambda*r)*0.5 - besselk(1,lambda*r) - besseli(1,lambda*r) ) - (pi + 2));
+W_absoluteTerm = - 0.5*s/(lambda^0 * D) * (pi*lambda*r * ( bessely(1,lambda*r)*besselj(0,lambda*rho)*0.5 - besselj(1,lambda*r)*bessely(0,lambda*rho)*0.5 - besselk(1,lambda*r)*besseli(0,lambda*rho) - besseli(1,lambda*r)*besselk(0,lambda*rho) ) - (pi + 2));
 
 
 % deflection derivative
@@ -64,4 +64,4 @@ for n = 1:length(coefficients)
     adjuncts(n) = factor(det(tmp_adjunct));
 end
 
-solved_coef = adjuncts./DELTA;
+solved_coef = adjuncts./DELTA

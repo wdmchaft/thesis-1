@@ -4,7 +4,7 @@ classdef SolidWithMass < geometry.SolidWithHole
         mu
     end
     
-    properties (GetAccess = 'private', SetAccess = 'private')
+    properties (SetAccess = 'private')
         xi
     end
     
